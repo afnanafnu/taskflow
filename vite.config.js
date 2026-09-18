@@ -19,6 +19,9 @@ export default defineConfig({
                 'resources/css/projects/project-create-form.css',
                 'resources/css/projects/project-edit-form.css',
 
+                // user pages
+                'resources/css/users/users-index.css',
+                'resources/css/users/users-form.css',
             ],
             refresh: true,
         }),
