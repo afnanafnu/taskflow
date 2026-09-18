@@ -18,8 +18,7 @@ class ProjectController extends Controller
 {
     public function __construct(
         private readonly ProjectService $projectService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): AnonymousResourceCollection
     {
@@ -34,30 +33,35 @@ class ProjectController extends Controller
     public function store(
         StoreProjectRequest $request
     ): ProjectResource {
-        $this->authorize('create', Project::class);
+        $this->authorize(
+            'create',
+            Project::class
+        );
 
         $project = $this->projectService->create(
-            $request->validated(),
-            $request->user()
+            $request->user(),
+            $request->validated()
         );
 
         return new ProjectResource(
             $project->load([
-                'owner',
-                'users',
+                'owner:id,name,email',
+                'users:id,name,email',
             ])
         );
     }
 
-    public function show(Project $project): ProjectResource
-    {
-        $this->authorize('view', $project);
+    public function show(
+        Project $project
+    ): ProjectResource {
+        $this->authorize(
+            'view',
+            $project
+        );
 
-        $project->load([
-            'owner',
-            'users',
-            'tasks',
-        ]);
+        $project = $this->projectService->getForView(
+            $project
+        );
 
         return new ProjectResource($project);
     }
@@ -66,7 +70,10 @@ class ProjectController extends Controller
         UpdateProjectRequest $request,
         Project $project
     ): ProjectResource {
-        $this->authorize('update', $project);
+        $this->authorize(
+            'update',
+            $project
+        );
 
         $project = $this->projectService->update(
             $project,
@@ -75,17 +82,23 @@ class ProjectController extends Controller
 
         return new ProjectResource(
             $project->load([
-                'owner',
-                'users',
+                'owner:id,name,email',
+                'users:id,name,email',
             ])
         );
     }
 
-    public function destroy(Project $project): JsonResponse
-    {
-        $this->authorize('delete', $project);
+    public function destroy(
+        Project $project
+    ): JsonResponse {
+        $this->authorize(
+            'delete',
+            $project
+        );
 
-        $this->projectService->delete($project);
+        $this->projectService->delete(
+            $project
+        );
 
         return response()->json([
             'success' => true,
@@ -98,17 +111,27 @@ class ProjectController extends Controller
         AddProjectMemberRequest $request,
         Project $project
     ): ProjectResource {
-        $this->authorize('addMember', $project);
+        $this->authorize(
+            'addMember',
+            $project
+        );
+
+        $data = $request->validated();
+
+        $user = User::findOrFail(
+            $data['user_id']
+        );
 
         $this->projectService->addMember(
             $project,
-            $request->validated()
+            $user,
+            $data['role'] ?? 'member'
         );
 
         return new ProjectResource(
-            $project->load([
-                'owner',
-                'users',
+            $project->fresh([
+                'owner:id,name,email',
+                'users:id,name,email',
             ])
         );
     }
@@ -117,7 +140,10 @@ class ProjectController extends Controller
         Project $project,
         User $user
     ): ProjectResource {
-        $this->authorize('removeMember', [$project, $user]);
+        $this->authorize(
+            'removeMember',
+            $project
+        );
 
         $this->projectService->removeMember(
             $project,
@@ -125,9 +151,9 @@ class ProjectController extends Controller
         );
 
         return new ProjectResource(
-            $project->load([
-                'owner',
-                'users',
+            $project->fresh([
+                'owner:id,name,email',
+                'users:id,name,email',
             ])
         );
     }

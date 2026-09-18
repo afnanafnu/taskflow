@@ -14,8 +14,7 @@ class AuthController extends Controller
 {
     public function __construct(
         private readonly AuthService $authService
-    ) {
-    }
+    ) {}
 
     public function register(
         RegisterRequest $request
@@ -26,12 +25,9 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-
             'message' => 'Registration successful.',
-
             'data' => [
                 'user' => new UserResource($result['user']),
-
                 'token' => $result['token'],
             ],
         ], 201);
@@ -46,12 +42,9 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-
             'message' => 'Login successful.',
-
             'data' => [
                 'user' => new UserResource($result['user']),
-
                 'token' => $result['token'],
             ],
         ]);
@@ -65,17 +58,21 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-
             'message' => 'Logged out successfully.',
-
             'data' => null,
         ]);
     }
 
-    public function user(Request $request): UserResource
+    public function user(Request $request): JsonResponse
     {
-        return new UserResource(
-            $request->user()
-        );
+        return response()->json([
+            'success' => true,
+            'message' => 'User retrieved successfully.',
+            'data' => [
+                'user' => new UserResource(
+                    $request->user()
+                ),
+            ],
+        ]);
     }
 }

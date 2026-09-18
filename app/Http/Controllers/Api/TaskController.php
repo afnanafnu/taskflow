@@ -22,26 +22,30 @@ class TaskController extends Controller
         private readonly TaskService $taskService
     ) {}
 
+    /**
+     * List tasks inside a project.
+     */
     public function index(
         TaskIndexRequest $request,
         Project $project
     ): AnonymousResourceCollection {
         $this->authorize(
-            'viewAny',
+            'viewAnyForProject',
             [Task::class, $project]
         );
 
-        $filters = $request->validated();
-
         $tasks = $this->taskService->listForProject(
             $project,
-            $filters,
+            $request->validated(),
             $request->integer('per_page', 15)
         );
 
         return TaskResource::collection($tasks);
     }
 
+    /**
+     * Create a task.
+     */
     public function store(
         StoreTaskRequest $request,
         Project $project
@@ -58,13 +62,16 @@ class TaskController extends Controller
 
         return new TaskResource(
             $task->load([
-                'project',
-                'assignee',
-                'labels',
+                'project:id,name,owner_id',
+                'assignee:id,name,email',
+                'labels:id,name,colour',
             ])
         );
     }
 
+    /**
+     * Show a task.
+     */
     public function show(
         Project $project,
         Task $task
@@ -74,11 +81,16 @@ class TaskController extends Controller
             $task
         );
 
-        return new TaskResource(
-            $this->taskService->find($task)
+        $task = $this->taskService->getForView(
+            $task
         );
+
+        return new TaskResource($task);
     }
 
+    /**
+     * Update a task.
+     */
     public function update(
         UpdateTaskRequest $request,
         Project $project,
@@ -90,7 +102,6 @@ class TaskController extends Controller
         );
 
         $task = $this->taskService->update(
-            $project,
             $task,
             $request->validated()
         );
@@ -98,6 +109,9 @@ class TaskController extends Controller
         return new TaskResource($task);
     }
 
+    /**
+     * Delete a task.
+     */
     public function destroy(
         Project $project,
         Task $task
@@ -116,6 +130,9 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Change task status.
+     */
     public function status(
         UpdateTaskStatusRequest $request,
         Project $project,
@@ -126,14 +143,17 @@ class TaskController extends Controller
             $task
         );
 
-        $task = $this->taskService->updateStatus(
+        $task = $this->taskService->changeStatus(
             $task,
-            $request->validated('status')
+            $request->validated()['status']
         );
 
         return new TaskResource($task);
     }
 
+    /**
+     * Attach a label to a task.
+     */
     public function attachLabel(
         AttachTaskLabelRequest $request,
         Project $project,
@@ -144,14 +164,21 @@ class TaskController extends Controller
             $task
         );
 
-        $task = $this->taskService->attachLabel(
+        $this->taskService->attachLabel(
             $task,
-            $request->validated('label_id')
+            $request->validated()['label_id']
+        );
+
+        $task = $this->taskService->getForView(
+            $task
         );
 
         return new TaskResource($task);
     }
 
+    /**
+     * Detach a label from a task.
+     */
     public function detachLabel(
         Project $project,
         Task $task,
@@ -162,9 +189,13 @@ class TaskController extends Controller
             $task
         );
 
-        $task = $this->taskService->detachLabel(
+        $this->taskService->detachLabel(
             $task,
             $label->id
+        );
+
+        $task = $this->taskService->getForView(
+            $task
         );
 
         return new TaskResource($task);

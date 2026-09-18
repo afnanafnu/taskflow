@@ -11,7 +11,6 @@ use App\Models\Task;
 use App\Services\CommentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -22,6 +21,11 @@ class CommentController extends Controller
     public function index(
         Task $task
     ): AnonymousResourceCollection {
+        $this->authorize(
+            'viewAny',
+            [Comment::class, $task]
+        );
+
         $comments = $this->commentService->listForTask(
             $task
         );
@@ -45,7 +49,7 @@ class CommentController extends Controller
         );
 
         return new CommentResource(
-            $comment->load('user')
+            $comment->load('user:id,name,email')
         );
     }
 
