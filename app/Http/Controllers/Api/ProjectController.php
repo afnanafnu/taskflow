@@ -3,47 +3,132 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddProjectMemberRequest;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Resources\ProjectResource;
+use App\Models\Project;
+use App\Models\User;
+use App\Services\ProjectService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        private readonly ProjectService $projectService
+    ) {
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
-        //
+        $projects = $this->projectService->listForUser(
+            $request->user(),
+            $request->integer('per_page', 15)
+        );
+
+        return ProjectResource::collection($projects);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function store(
+        StoreProjectRequest $request
+    ): ProjectResource {
+        $this->authorize('create', Project::class);
+
+        $project = $this->projectService->create(
+            $request->validated(),
+            $request->user()
+        );
+
+        return new ProjectResource(
+            $project->load([
+                'owner',
+                'users',
+            ])
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function show(Project $project): ProjectResource
     {
-        //
+        $this->authorize('view', $project);
+
+        $project->load([
+            'owner',
+            'users',
+            'tasks',
+        ]);
+
+        return new ProjectResource($project);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(
+        UpdateProjectRequest $request,
+        Project $project
+    ): ProjectResource {
+        $this->authorize('update', $project);
+
+        $project = $this->projectService->update(
+            $project,
+            $request->validated()
+        );
+
+        return new ProjectResource(
+            $project->load([
+                'owner',
+                'users',
+            ])
+        );
+    }
+
+    public function destroy(Project $project): JsonResponse
     {
-        //
+        $this->authorize('delete', $project);
+
+        $this->projectService->delete($project);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Project deleted successfully.',
+            'data' => null,
+        ]);
+    }
+
+    public function addMember(
+        AddProjectMemberRequest $request,
+        Project $project
+    ): ProjectResource {
+        $this->authorize('addMember', $project);
+
+        $this->projectService->addMember(
+            $project,
+            $request->validated()
+        );
+
+        return new ProjectResource(
+            $project->load([
+                'owner',
+                'users',
+            ])
+        );
+    }
+
+    public function removeMember(
+        Project $project,
+        User $user
+    ): ProjectResource {
+        $this->authorize('removeMember', [$project, $user]);
+
+        $this->projectService->removeMember(
+            $project,
+            $user
+        );
+
+        return new ProjectResource(
+            $project->load([
+                'owner',
+                'users',
+            ])
+        );
     }
 }

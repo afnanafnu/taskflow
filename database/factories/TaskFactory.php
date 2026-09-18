@@ -3,12 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
- */
 class TaskFactory extends Factory
 {
     public function definition(): array
@@ -16,7 +12,7 @@ class TaskFactory extends Factory
         return [
             'project_id' => Project::factory(),
 
-            'assignee_id' => User::factory(),
+            'assignee_id' => null,
 
             'title' => fake()->sentence(
                 fake()->numberBetween(3, 8)
@@ -37,10 +33,9 @@ class TaskFactory extends Factory
                 'high',
             ]),
 
-            'due_date' => fake()->optional(0.8)->dateTimeBetween(
-                'now',
-                '+60 days'
-            ),
+            'due_date' => fake()
+                ->optional(0.8)
+                ->dateTimeBetween('now', '+60 days'),
         ];
     }
 }

@@ -3,47 +3,85 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
+use App\Models\Comment;
+use App\Models\Task;
+use App\Services\CommentService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        private readonly CommentService $commentService
+    ) {}
+
+    public function index(
+        Task $task
+    ): AnonymousResourceCollection {
+        $comments = $this->commentService->listForTask(
+            $task
+        );
+
+        return CommentResource::collection($comments);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(
+        StoreCommentRequest $request,
+        Task $task
+    ): CommentResource {
+        $this->authorize(
+            'create',
+            [Comment::class, $task]
+        );
+
+        $comment = $this->commentService->create(
+            $task,
+            $request->user(),
+            $request->validated()
+        );
+
+        return new CommentResource(
+            $comment->load('user')
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function update(
+        UpdateCommentRequest $request,
+        Comment $comment
+    ): CommentResource {
+        $this->authorize(
+            'update',
+            $comment
+        );
+
+        $comment = $this->commentService->update(
+            $comment,
+            $request->validated()
+        );
+
+        return new CommentResource($comment);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function destroy(
+        Comment $comment
+    ): JsonResponse {
+        $this->authorize(
+            'delete',
+            $comment
+        );
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $this->commentService->delete(
+            $comment
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment deleted successfully.',
+            'data' => null,
+        ]);
     }
 }
