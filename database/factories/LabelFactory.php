@@ -9,15 +9,23 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LabelFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->unique()->randomElement([
+                'Bug',
+                'Feature',
+                'Urgent',
+                'Backend',
+                'Frontend',
+                'API',
+                'Database',
+                'Testing',
+                'Documentation',
+                'Security',
+            ]),
+
+            'colour' => fake()->hexColor(),
         ];
     }
 }
