@@ -1,0 +1,769 @@
+/* =========================================
+   PROJECT FORM
+========================================= */
+
+.project-form-page {
+    --project-primary: #2563eb;
+    --project-primary-dark: #1d4ed8;
+    --project-primary-soft: #eff6ff;
+
+    --project-success: #16a34a;
+    --project-warning: #d97706;
+    --project-danger: #dc2626;
+
+    --project-purple: #7c3aed;
+    --project-purple-soft: #f5f3ff;
+
+    --project-text: #111827;
+    --project-muted: #6b7280;
+    --project-border: #e5e7eb;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.project-form-header {
+    margin-bottom: 24px;
+}
+
+.project-form-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 14px;
+
+    color: var(--project-muted);
+
+    font-size: 12px;
+}
+
+.project-form-breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: var(--project-muted);
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.project-form-breadcrumb a:hover {
+    color: var(--project-primary);
+}
+
+.project-form-breadcrumb > i {
+    color: #cbd5e1;
+    font-size: 9px;
+}
+
+.project-form-title-wrapper {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+}
+
+.project-form-title-icon {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #3b82f6,
+        #1d4ed8
+    );
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+.project-form-title {
+    margin: 0 0 5px;
+
+    color: var(--project-text);
+
+    font-size: 27px;
+    font-weight: 750;
+
+    line-height: 1.25;
+}
+
+.project-form-subtitle {
+    margin: 0;
+
+    color: var(--project-muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.project-form-card {
+    overflow: visible;
+
+    background: #ffffff;
+
+    border: 1px solid var(--project-border);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.045);
+}
+
+.project-form-card-header {
+    display: flex;
+    align-items: center;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid var(--project-border);
+}
+
+.project-form-card-header h5 {
+    margin: 0 0 4px;
+
+    color: var(--project-text);
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.project-form-card-header h5 i {
+    color: var(--project-primary);
+}
+
+.project-form-card-header p {
+    margin: 0;
+
+    color: var(--project-muted);
+
+    font-size: 11px;
+}
+
+.project-form-card-body {
+    padding: 24px;
+}
+
+
+/* =========================================
+   ERROR ALERT
+========================================= */
+
+.project-form-alert {
+    margin-bottom: 24px;
+
+    padding: 14px 16px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 9px;
+
+    color: #991b1b;
+
+    font-size: 12px;
+}
+
+.project-form-alert-title {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    font-weight: 700;
+}
+
+.project-form-alert ul {
+    margin: 0;
+    padding-left: 22px;
+}
+
+.project-form-alert li {
+    margin-bottom: 2px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.project-form-group {
+    margin-bottom: 22px;
+}
+
+.project-form-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.project-form-label > span {
+    color: var(--project-danger);
+}
+
+.project-input-wrapper {
+    position: relative;
+}
+
+.project-input-wrapper > i {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #94a3b8;
+
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+.project-form-input,
+.project-form-select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 13px 0 38px;
+
+    border: 1px solid var(--project-border);
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: var(--project-text);
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-form-select {
+    cursor: pointer;
+}
+
+.project-form-input:focus,
+.project-form-select:focus,
+.project-form-textarea:focus {
+    border-color: var(--project-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.project-form-textarea {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border: 1px solid var(--project-border);
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: var(--project-text);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    resize: vertical;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-form-input.is-invalid,
+.project-form-select.is-invalid,
+.project-form-textarea.is-invalid {
+    border-color: var(--project-danger);
+}
+
+.project-form-error {
+    margin-top: 6px;
+
+    color: var(--project-danger);
+
+    font-size: 11px;
+}
+
+.project-form-help {
+    margin-top: 7px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   MEMBER SELECT
+========================================= */
+
+.project-member-select-wrapper {
+    position: relative;
+}
+
+.project-member-select {
+    position: relative;
+
+    width: 100%;
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 42px 0 13px;
+
+    border: 1px solid var(--project-border);
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: var(--project-text);
+
+    font-size: 13px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-member-select:hover {
+    border-color: #cbd5e1;
+}
+
+.project-member-placeholder {
+    color: #94a3b8;
+}
+
+.project-member-selected-count {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: var(--project-text);
+
+    font-weight: 600;
+}
+
+.project-member-selected-count i {
+    color: var(--project-primary);
+}
+
+.project-member-chevron {
+    position: absolute;
+
+    right: 14px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    transition: transform 0.2s ease;
+}
+
+.project-member-chevron.rotate {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================
+   DROPDOWN
+========================================= */
+
+.project-member-dropdown {
+    position: absolute;
+
+    z-index: 1050;
+
+    left: 0;
+    right: 0;
+    top: calc(100% + 5px);
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid var(--project-border);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+.project-member-search {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 2;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid var(--project-border);
+}
+
+.project-member-search-wrapper {
+    position: relative;
+}
+
+.project-member-search-wrapper > i {
+    position: absolute;
+
+    left: 11px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    pointer-events: none;
+}
+
+.project-member-search-wrapper input {
+    width: 100%;
+    height: 36px;
+
+    padding: 0 10px 0 33px;
+
+    border: 1px solid var(--project-border);
+
+    border-radius: 7px;
+
+    color: var(--project-text);
+
+    font-size: 12px;
+
+    outline: none;
+}
+
+.project-member-search-wrapper input:focus {
+    border-color: var(--project-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.07);
+}
+
+.project-member-list {
+    max-height: 260px;
+
+    overflow-y: auto;
+}
+
+.project-member-option {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    border: 0;
+
+    background: #ffffff;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background 0.15s ease;
+}
+
+.project-member-option:hover {
+    background: #f8fafc;
+}
+
+.project-member-option.selected {
+    background: var(--project-primary-soft);
+}
+
+.project-member-checkbox {
+    width: 18px;
+    flex: 0 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-member-checkbox .form-check-input {
+    margin: 0;
+
+    width: 15px;
+    height: 15px;
+
+    cursor: pointer;
+}
+
+.project-member-checkbox .form-check-input:checked {
+    background-color: var(--project-primary);
+
+    border-color: var(--project-primary);
+}
+
+.project-member-avatar {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e0e7ff;
+
+    color: #4338ca;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.project-member-info {
+    min-width: 0;
+}
+
+.project-member-name {
+    overflow: hidden;
+
+    color: var(--project-text);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.project-member-email {
+    margin-top: 2px;
+
+    overflow: hidden;
+
+    color: var(--project-muted);
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.project-member-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 30px 15px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+.project-member-empty i {
+    font-size: 22px;
+}
+
+
+/* =========================================
+   SELECTED MEMBERS
+========================================= */
+
+.project-selected-members {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 9px;
+}
+
+.project-selected-member {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 8px 6px 11px;
+
+    background: var(--project-primary-soft);
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 999px;
+
+    color: var(--project-primary-dark);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.project-selected-member button {
+    width: 19px;
+    height: 19px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #dbeafe;
+
+    color: var(--project-primary-dark);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.project-selected-member button:hover {
+    background: var(--project-primary);
+
+    color: #ffffff;
+}
+
+.project-selected-member button i {
+    font-size: 10px;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.project-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--project-border);
+}
+
+.project-cancel-btn,
+.project-submit-btn {
+    min-height: 40px;
+
+    padding: 8px 16px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.project-submit-btn {
+    box-shadow:
+        0 5px 12px rgba(37, 99, 235, 0.14);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 767.98px) {
+
+    .project-form-title {
+        font-size: 23px;
+    }
+
+    .project-form-title-icon {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+
+        font-size: 18px;
+    }
+
+    .project-form-card-header,
+    .project-form-card-body {
+        padding: 18px;
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .project-form-title-wrapper {
+        gap: 10px;
+    }
+
+    .project-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .project-cancel-btn,
+    .project-submit-btn {
+        width: 100%;
+    }
+
+}

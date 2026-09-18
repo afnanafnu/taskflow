@@ -1,3 +1,6 @@
+@push('styles')
+    @vite('resources/css/projects/projects-index.css')
+@endpush
 
 <x-taskflow-layout>
 
@@ -5,30 +8,47 @@
         Projects
     </x-slot>
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 projects-page">
 
         {{-- Page Header --}}
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div class="projects-page-header">
 
             <div>
-                <h2 class="mb-1">
-                    Projects
-                </h2>
+                <div class="projects-breadcrumb">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Workspace</span>
+                    <i class="bi bi-chevron-right"></i>
+                    <span>Projects</span>
+                </div>
 
-                <p class="text-muted mb-0">
-                    @if(auth()->user()->isAdmin())
-                        All projects
-                    @else
-                        Projects you have access to
-                    @endif
-                </p>
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="projects-title-icon">
+                        <i class="bi bi-folder-fill"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="projects-title">
+                            Projects
+                        </h2>
+
+                        <p class="projects-subtitle">
+                            @if(auth()->user()->isAdmin())
+                                Manage and monitor all projects
+                            @else
+                                Projects you have access to
+                            @endif
+                        </p>
+                    </div>
+
+                </div>
             </div>
 
             @can('create', App\Models\Project::class)
 
                 <a
                     href="{{ route('projects.create') }}"
-                    class="btn btn-primary"
+                    class="btn btn-primary projects-create-btn"
                 >
                     <i class="bi bi-plus-lg me-1"></i>
                     Create Project
@@ -41,6 +61,7 @@
 
         {{-- Projects Table --}}
         <div
+            class="projects-table-card"
             x-data="{
                 search: '',
                 page: 1,
@@ -156,245 +177,288 @@
             }"
         >
 
-            <div class="card border-0 shadow-sm">
+            {{-- Table Header --}}
+            <div class="projects-table-header">
 
-                {{-- Table Header --}}
-                <div class="card-header bg-white border-0 p-3">
+                <div>
+                    <h5 class="projects-table-title">
+                        <i class="bi bi-folder2-open me-2"></i>
+                        All Projects
+                    </h5>
 
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-
-                        <div>
-                            <h5 class="mb-0">
-                                Projects
-                            </h5>
-                        </div>
-
-
-                        {{-- Search --}}
-                        <div class="data-table-search">
-
-                            <div class="input-group">
-
-                                <span class="input-group-text bg-white">
-                                    <i class="bi bi-search"></i>
-                                </span>
-
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Search projects..."
-                                    x-model="search"
-                                >
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                    <p class="projects-table-description">
+                        Browse and manage your available projects.
+                    </p>
                 </div>
 
 
-                {{-- Table --}}
-                <div class="table-responsive">
+                {{-- Search --}}
+                <div class="projects-search">
 
-                    <table class="table table-hover align-middle mb-0">
+                    <i class="bi bi-search"></i>
 
-                        <thead class="table-light">
+                    <input
+                        type="text"
+                        placeholder="Search projects..."
+                        x-model="search"
+                    >
 
-                            <tr>
+                    <button
+                        type="button"
+                        x-show="search"
+                        x-cloak
+                        @click="search = ''"
+                        class="projects-search-clear"
+                    >
+                        <i class="bi bi-x"></i>
+                    </button>
 
-                                <th>#</th>
+                </div>
 
-                                <th>Project</th>
-
-                                <th>Owner</th>
-
-                                <th>Status</th>
-
-                                <th>Members</th>
-
-                                <th>Tasks</th>
-
-                                <th>Actions</th>
-
-                            </tr>
-
-                        </thead>
+            </div>
 
 
-                        <tbody x-ref="tableBody">
+            {{-- Table --}}
+            <div class="table-responsive">
 
-                            @forelse($projects as $project)
+                <table class="table projects-table align-middle mb-0">
 
-                                <tr data-row>
+                    <thead>
 
-                                    {{-- ID --}}
-                                    <td>
-                                        {{ $project->id }}
-                                    </td>
+                        <tr>
+
+                            <th class="projects-col-id">
+                                #
+                            </th>
+
+                            <th>
+                                Project
+                            </th>
+
+                            <th>
+                                Owner
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Members
+                            </th>
+
+                            <th>
+                                Tasks
+                            </th>
+
+                            <th class="projects-col-actions">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
 
 
-                                    {{-- Project --}}
-                                    <td>
+                    <tbody x-ref="tableBody">
 
-                                        <strong>
-                                            {{ $project->name }}
-                                        </strong>
+                        @forelse($projects as $project)
 
-                                        @if($project->description)
+                            <tr data-row>
 
-                                            <div class="small text-muted">
-                                                {{ Str::limit($project->description, 60) }}
-                                            </div>
+                                {{-- ID --}}
+                                <td>
 
-                                        @endif
+                                    <span class="project-id">
+                                        #{{ $project->id }}
+                                    </span>
 
-                                    </td>
+                                </td>
 
 
-                                    {{-- Owner --}}
-                                    <td>
-                                        {{ $project->owner->name ?? 'N/A' }}
-                                    </td>
+                                {{-- Project --}}
+                                <td>
+
+                                    <div class="project-name-wrapper">
+
+                                        <div class="project-avatar">
+
+                                            <i class="bi bi-folder-fill"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <a
+                                                href="{{ route('projects.show', $project) }}"
+                                                class="project-name"
+                                            >
+                                                {{ $project->name }}
+                                            </a>
+
+                                            @if($project->description)
+
+                                                <div class="project-description">
+
+                                                    {{ Str::limit($project->description, 70) }}
+
+                                                </div>
+
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
 
 
-                                    {{-- Status --}}
-                                    <td>
+                                {{-- Owner --}}
+                                <td>
 
-                                        <span class="badge bg-secondary">
-                                            {{ ucfirst($project->status) }}
+                                    <div class="project-owner">
+
+                                        <div class="project-owner-avatar">
+
+                                            {{ strtoupper(
+                                                substr(
+                                                    $project->owner->name ?? 'N',
+                                                    0,
+                                                    1
+                                                )
+                                            ) }}
+
+                                        </div>
+
+                                        <span>
+                                            {{ $project->owner->name ?? 'N/A' }}
                                         </span>
 
-                                    </td>
+                                    </div>
+
+                                </td>
 
 
-                                    {{-- Members --}}
-                                    <td>
-                                        {{ $project->users_count }}
-                                    </td>
+                                {{-- Status --}}
+                                <td>
+
+                                    @php
+                                        $statusClass = match($project->status) {
+                                            'active' => 'project-status-active',
+                                            'completed' => 'project-status-completed',
+                                            'archived' => 'project-status-archived',
+                                            default => 'project-status-default',
+                                        };
+                                    @endphp
+
+                                    <span class="project-status {{ $statusClass }}">
+
+                                        @if($project->status === 'active')
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        @elseif($project->status === 'completed')
+                                            <i class="bi bi-check-circle-fill"></i>
+                                        @elseif($project->status === 'archived')
+                                            <i class="bi bi-archive-fill"></i>
+                                        @else
+                                            <i class="bi bi-circle-fill"></i>
+                                        @endif
+
+                                        {{ ucfirst($project->status) }}
+
+                                    </span>
+
+                                </td>
 
 
-                                    {{-- Tasks --}}
-                                    <td>
-                                        {{ $project->tasks_count }}
-                                    </td>
+                                {{-- Members --}}
+                                <td>
+
+                                    <div class="project-stat">
+
+                                        <span class="project-stat-icon members">
+                                            <i class="bi bi-people-fill"></i>
+                                        </span>
+
+                                        <strong>
+                                            {{ $project->users_count }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
 
 
-                                    {{-- Actions --}}
-                                    <td>
+                                {{-- Tasks --}}
+                                <td>
 
-                                        <div class="d-flex gap-1">
+                                    <div class="project-stat">
 
-                                            {{-- VIEW --}}
-                                            @can('view', $project)
+                                        <span class="project-stat-icon tasks">
+                                            <i class="bi bi-check2-square"></i>
+                                        </span>
 
-                                                <a
-                                                    href="{{ route('projects.show', $project) }}"
-                                                    class="btn btn-sm btn-outline-primary"
-                                                    title="View"
+                                        <strong>
+                                            {{ $project->tasks_count }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                {{-- Actions --}}
+                                <td>
+
+                                    <div class="project-actions">
+
+                                        @can('view', $project)
+
+                                            <a
+                                                href="{{ route('projects.show', $project) }}"
+                                                class="project-action-btn project-action-view"
+                                                title="View Project"
+                                            >
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+
+                                        @endcan
+
+
+                                        @can('update', $project)
+
+                                            <a
+                                                href="{{ route('projects.edit', $project) }}"
+                                                class="project-action-btn project-action-edit"
+                                                title="Edit Project"
+                                            >
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                        @endcan
+
+
+                                        @can('delete', $project)
+
+                                            <form
+                                                action="{{ route('projects.destroy', $project) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete this project?')"
+                                            >
+
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="project-action-btn project-action-delete"
+                                                    title="Delete Project"
                                                 >
-                                                    <i class="bi bi-eye"></i>
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
 
-                                                    <span class="d-none d-xl-inline">
-                                                        View
-                                                    </span>
-                                                </a>
+                                            </form>
 
-                                            @endcan
-
-
-                                            {{-- EDIT --}}
-                                            @can('update', $project)
-
-                                                <a
-                                                    href="{{ route('projects.edit', $project) }}"
-                                                    class="btn btn-sm btn-primary"
-                                                    title="Edit"
-                                                >
-                                                    <i class="bi bi-pencil"></i>
-
-                                                    <span class="d-none d-xl-inline">
-                                                        Edit
-                                                    </span>
-                                                </a>
-
-                                            @endcan
-
-
-                                            {{-- DELETE --}}
-                                            @can('delete', $project)
-
-                                                <form
-                                                    action="{{ route('projects.destroy', $project) }}"
-                                                    method="POST"
-                                                    class="d-inline"
-                                                    onsubmit="return confirm('Are you sure you want to delete this project?')"
-                                                >
-
-                                                    @csrf
-
-                                                    @method('DELETE')
-
-                                                    <button
-                                                        type="submit"
-                                                        class="btn btn-sm btn-danger"
-                                                        title="Delete"
-                                                    >
-                                                        <i class="bi bi-trash"></i>
-
-                                                        <span class="d-none d-xl-inline">
-                                                            Delete
-                                                        </span>
-                                                    </button>
-
-                                                </form>
-
-                                            @endcan
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-                            @empty
-
-                                <tr>
-
-                                    <td
-                                        colspan="7"
-                                        class="text-center py-5"
-                                    >
-
-                                        <div class="text-muted">
-
-                                            <i class="bi bi-folder-x fs-2 d-block mb-2"></i>
-
-                                            No projects found.
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-                            @endforelse
-
-
-                            {{-- Alpine empty search result --}}
-                            <tr x-show="filteredRows.length === 0">
-
-                                <td
-                                    colspan="7"
-                                    class="text-center py-5"
-                                >
-
-                                    <div class="text-muted">
-
-                                        <i class="bi bi-search fs-2 d-block mb-2"></i>
-
-                                        No matching projects found.
+                                        @endcan
 
                                     </div>
 
@@ -402,105 +466,175 @@
 
                             </tr>
 
-                        </tbody>
+                        @empty
 
-                    </table>
+                            <tr>
+
+                                <td colspan="7">
+
+                                    <div class="projects-empty">
+
+                                        <div class="projects-empty-icon">
+
+                                            <i class="bi bi-folder-x"></i>
+
+                                        </div>
+
+                                        <h6>
+                                            No projects found
+                                        </h6>
+
+                                        <p>
+                                            There are no projects available yet.
+                                        </p>
+
+                                        @can('create', App\Models\Project::class)
+
+                                            <a
+                                                href="{{ route('projects.create') }}"
+                                                class="btn btn-primary btn-sm"
+                                            >
+                                                <i class="bi bi-plus-lg me-1"></i>
+                                                Create Project
+                                            </a>
+
+                                        @endcan
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+
+                        {{-- No search results --}}
+                        <tr
+                            x-show="filteredRows.length === 0 && rows.length > 0"
+                            x-cloak
+                        >
+
+                            <td colspan="7">
+
+                                <div class="projects-empty">
+
+                                    <div class="projects-empty-icon">
+
+                                        <i class="bi bi-search"></i>
+
+                                    </div>
+
+                                    <h6>
+                                        No matching projects
+                                    </h6>
+
+                                    <p>
+                                        Try searching with a different project name.
+                                    </p>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm"
+                                        @click="search = ''"
+                                    >
+                                        Clear Search
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {{-- Footer --}}
+            <div class="projects-table-footer">
+
+                <div class="projects-result-count">
+
+                    Showing
+
+                    <strong x-text="startItem"></strong>
+
+                    -
+
+                    <strong x-text="endItem"></strong>
+
+                    of
+
+                    <strong x-text="filteredRows.length"></strong>
+
+                    projects
 
                 </div>
 
 
-                {{-- Footer --}}
-                <div class="card-footer bg-white border-0 p-3">
+                <div class="projects-footer-controls">
 
-                    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+                    {{-- Per Page --}}
+                    <div class="projects-per-page">
 
+                        <label>
+                            Show
+                        </label>
 
-                        {{-- Result Count --}}
-                        <div class="small text-muted">
+                        <select
+                            x-model.number="perPage"
+                            class="form-select form-select-sm"
+                        >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
 
-                            Showing
-
-                            <strong x-text="startItem"></strong>
-
-                            -
-
-                            <strong x-text="endItem"></strong>
-
-                            of
-
-                            <strong x-text="filteredRows.length"></strong>
-
-                            results
-
-                        </div>
+                    </div>
 
 
-                        {{-- Per Page --}}
-                        <div class="d-flex align-items-center gap-2">
+                    {{-- Pagination --}}
+                    <div class="projects-pagination">
 
-                            <label class="small text-muted mb-0">
-                                Show
-                            </label>
-
-                            <select
-                                class="form-select form-select-sm"
-                                style="width: 75px"
-                                x-model.number="perPage"
-                            >
-
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-
-                            </select>
-
-                        </div>
+                        <button
+                            type="button"
+                            class="projects-page-btn"
+                            @click="previousPage()"
+                            :disabled="page === 1"
+                        >
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
 
 
-                        {{-- Pagination --}}
-                        <div class="d-flex align-items-center gap-1">
+                        <template
+                            x-for="pageNumber in totalPages"
+                            :key="pageNumber"
+                        >
 
                             <button
                                 type="button"
-                                class="btn btn-sm btn-outline-secondary"
-                                @click="previousPage()"
-                                :disabled="page === 1"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                            </button>
+                                class="projects-page-number"
+                                :class="{ 'active': page === pageNumber }"
+                                @click="goToPage(pageNumber)"
+                                x-text="pageNumber"
+                            ></button>
+
+                        </template>
 
 
-                            <template
-                                x-for="pageNumber in totalPages"
-                                :key="pageNumber"
-                            >
-
-                                <button
-                                    type="button"
-                                    class="btn btn-sm"
-                                    :class="
-                                        page === pageNumber
-                                            ? 'btn-primary'
-                                            : 'btn-outline-secondary'
-                                    "
-                                    @click="goToPage(pageNumber)"
-                                    x-text="pageNumber"
-                                ></button>
-
-                            </template>
-
-
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-secondary"
-                                @click="nextPage()"
-                                :disabled="page === totalPages"
-                            >
-                                <i class="bi bi-chevron-right"></i>
-                            </button>
-
-                        </div>
+                        <button
+                            type="button"
+                            class="projects-page-btn"
+                            @click="nextPage()"
+                            :disabled="page === totalPages"
+                        >
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
 
                     </div>
 

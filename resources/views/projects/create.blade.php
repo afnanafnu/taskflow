@@ -1,60 +1,100 @@
+
+@push('styles')
+  @vite('resources/css/projects/project-create-form.css')
+@endpush
+
 <x-taskflow-layout>
 
     <x-slot name="title">
         Create Project
     </x-slot>
 
-    <div class="container-fluid py-4">
+
+    <div class="container-fluid py-4 project-form-page">
 
         <div class="row justify-content-center">
 
             <div class="col-xl-8 col-lg-9">
 
-                <div class="card border-0 shadow-sm">
+                {{-- Header --}}
+                <div class="project-form-header">
 
-                    {{-- Header --}}
-                    <div class="card-header bg-white border-0 p-4">
+                    <div class="project-form-breadcrumb">
 
-                        <div class="d-flex align-items-center gap-2 mb-2">
+                        <a href="{{ route('projects.index') }}">
+                            <i class="bi bi-arrow-left"></i>
+                            Projects
+                        </a>
 
-                            <a href="{{ route('projects.index') }}" class="text-decoration-none text-muted">
-                                <i class="bi bi-arrow-left me-1"></i>
-                                Projects
-                            </a>
+                        <i class="bi bi-chevron-right"></i>
 
-                        </div>
-
-                        <h3 class="mb-1">
+                        <span>
                             Create Project
-                        </h3>
-
-                        <p class="text-muted mb-0">
-                            Create a new project and start managing your tasks.
-                        </p>
+                        </span>
 
                     </div>
 
 
-                    {{-- Form --}}
-                    <div class="card-body p-4">
+                    <div class="project-form-title-wrapper">
 
-                        @if ($errors->any())
+                        <div class="project-form-title-icon">
+                            <i class="bi bi-folder-plus"></i>
+                        </div>
 
-                            <div class="alert alert-danger">
+                        <div>
 
-                                <div class="fw-semibold mb-2">
-                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                            <h2 class="project-form-title">
+                                Create Project
+                            </h2>
+
+                            <p class="project-form-subtitle">
+                                Create a new project and start managing your tasks.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- Form Card --}}
+                <div class="project-form-card">
+
+                    <div class="project-form-card-header">
+
+                        <div>
+
+                            <h5>
+                                <i class="bi bi-folder2-open me-2"></i>
+                                Project Details
+                            </h5>
+
+                            <p>
+                                Enter the basic information for your project.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="project-form-card-body">
+
+                        {{-- Validation Errors --}}
+                        @if($errors->any())
+
+                            <div class="project-form-alert">
+
+                                <div class="project-form-alert-title">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
                                     Please fix the following errors:
                                 </div>
 
-                                <ul class="mb-0">
-
-                                    @foreach ($errors->all() as $error)
-                                        <li>
-                                            {{ $error }}
-                                        </li>
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
                                     @endforeach
-
                                 </ul>
 
                             </div>
@@ -62,25 +102,45 @@
                         @endif
 
 
-                        <form action="{{ route('projects.store') }}" method="POST">
+                        <form
+                            action="{{ route('projects.store') }}"
+                            method="POST"
+                        >
 
                             @csrf
 
 
                             {{-- Project Name --}}
-                            <div class="mb-4">
+                            <div class="project-form-group">
 
-                                <label for="name" class="form-label fw-semibold">
+                                <label
+                                    for="name"
+                                    class="project-form-label"
+                                >
                                     Project Name
-                                    <span class="text-danger">*</span>
+                                    <span>*</span>
                                 </label>
 
-                                <input type="text" id="name" name="name" value="{{ old('name') }}"
-                                    class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="Enter project name" maxlength="150" required autofocus>
+                                <div class="project-input-wrapper">
+
+                                    <i class="bi bi-folder"></i>
+
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value="{{ old('name') }}"
+                                        class="project-form-input @error('name') is-invalid @enderror"
+                                        placeholder="Enter project name"
+                                        maxlength="150"
+                                        required
+                                        autofocus
+                                    >
+
+                                </div>
 
                                 @error('name')
-                                    <div class="invalid-feedback">
+                                    <div class="project-form-error">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -89,23 +149,31 @@
 
 
                             {{-- Description --}}
-                            <div class="mb-4">
+                            <div class="project-form-group">
 
-                                <label for="description" class="form-label fw-semibold">
+                                <label
+                                    for="description"
+                                    class="project-form-label"
+                                >
                                     Description
                                 </label>
 
-                                <textarea id="description" name="description" rows="6"
-                                    class="form-control @error('description') is-invalid @enderror" placeholder="Describe the project..."
-                                    maxlength="5000">{{ old('description') }}</textarea>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    rows="5"
+                                    class="project-form-textarea @error('description') is-invalid @enderror"
+                                    placeholder="Describe the project..."
+                                    maxlength="5000"
+                                >{{ old('description') }}</textarea>
 
                                 @error('description')
-                                    <div class="invalid-feedback">
+                                    <div class="project-form-error">
                                         {{ $message }}
                                     </div>
                                 @enderror
 
-                                <div class="form-text">
+                                <div class="project-form-help">
                                     Maximum 5000 characters.
                                 </div>
 
@@ -113,172 +181,259 @@
 
 
                             {{-- Status --}}
-                            <div class="mb-4">
+                            <div class="project-form-group">
 
-                                <label for="status" class="form-label fw-semibold">
+                                <label
+                                    for="status"
+                                    class="project-form-label"
+                                >
                                     Status
-                                    <span class="text-danger">*</span>
+                                    <span>*</span>
                                 </label>
 
-                                <select id="status" name="status"
-                                    class="form-select @error('status') is-invalid @enderror" required>
+                                <div class="project-input-wrapper">
 
-                                    <option value="active" @selected(old('status', 'active') === 'active')>
-                                        Active
-                                    </option>
+                                    <i class="bi bi-activity"></i>
 
-                                    <option value="completed" @selected(old('status') === 'completed')>
-                                        Completed
-                                    </option>
+                                    <select
+                                        id="status"
+                                        name="status"
+                                        class="project-form-select @error('status') is-invalid @enderror"
+                                        required
+                                    >
 
-                                    <option value="archived" @selected(old('status') === 'archived')>
-                                        Archived
-                                    </option>
+                                        <option
+                                            value="active"
+                                            @selected(old('status', 'active') === 'active')
+                                        >
+                                            Active
+                                        </option>
 
-                                </select>
+                                        <option
+                                            value="completed"
+                                            @selected(old('status') === 'completed')
+                                        >
+                                            Completed
+                                        </option>
+
+                                        <option
+                                            value="archived"
+                                            @selected(old('status') === 'archived')
+                                        >
+                                            Archived
+                                        </option>
+
+                                    </select>
+
+                                </div>
 
                                 @error('status')
-                                    <div class="invalid-feedback">
+                                    <div class="project-form-error">
                                         {{ $message }}
                                     </div>
                                 @enderror
 
                             </div>
 
+
                             {{-- Project Members --}}
-                            <div class="mb-4" x-data="{
-                                open: false,
-                                search: '',
-                                selected: @js(old('members', [])),
-                                users: @js(
-    $users
-        ->map(
-            fn($user) => [
-                'id' => (string) $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-            ],
-        )
-        ->values(),
-),
-                            
-                                get filteredUsers() {
-                                    const term = this.search.toLowerCase().trim();
-                            
-                                    if (!term) {
-                                        return this.users;
-                                    }
-                            
-                                    return this.users.filter(user =>
-                                        user.name.toLowerCase().includes(term) ||
-                                        user.email.toLowerCase().includes(term)
-                                    );
-                                },
-                            
-                                isSelected(id) {
-                                    return this.selected.includes(String(id));
-                                },
-                            
-                                toggleUser(id) {
-                                    id = String(id);
-                            
-                                    if (this.isSelected(id)) {
+                            <div
+                                class="project-form-group"
+                                x-data="{
+                                    open: false,
+                                    search: '',
+                                    selected: @js(
+                                        collect(old('members', []))
+                                            ->map(fn ($id) => (string) $id)
+                                            ->values()
+                                            ->all()
+                                    ),
+                                    users: @js(
+                                        $users->map(function ($user) {
+                                            return [
+                                                'id' => (string) $user->id,
+                                                'name' => $user->name,
+                                                'email' => $user->email,
+                                            ];
+                                        })->values()->all()
+                                    ),
+
+                                    get filteredUsers() {
+                                        const term = this.search.toLowerCase().trim();
+
+                                        if (!term) {
+                                            return this.users;
+                                        }
+
+                                        return this.users.filter(user =>
+                                            user.name.toLowerCase().includes(term) ||
+                                            user.email.toLowerCase().includes(term)
+                                        );
+                                    },
+
+                                    isSelected(id) {
+                                        return this.selected.includes(String(id));
+                                    },
+
+                                    toggleUser(id) {
+                                        id = String(id);
+
+                                        if (this.isSelected(id)) {
+                                            this.selected = this.selected.filter(
+                                                selectedId => selectedId !== id
+                                            );
+                                        } else {
+                                            this.selected.push(id);
+                                        }
+                                    },
+
+                                    removeUser(id) {
+                                        id = String(id);
+
                                         this.selected = this.selected.filter(
                                             selectedId => selectedId !== id
                                         );
-                                    } else {
-                                        this.selected.push(id);
+                                    },
+
+                                    get selectedUsers() {
+                                        return this.users.filter(user =>
+                                            this.selected.includes(String(user.id))
+                                        );
                                     }
-                                },
-                            
-                                removeUser(id) {
-                                    this.selected = this.selected.filter(
-                                        selectedId => selectedId !== String(id)
-                                    );
-                                },
-                            
-                                get selectedUsers() {
-                                    return this.users.filter(user =>
-                                        this.selected.includes(String(user.id))
-                                    );
-                                }
-                            }">
-                                <label class="form-label fw-semibold">
+                                }"
+                            >
+
+                                <label class="project-form-label">
                                     Project Members
                                 </label>
 
-                                {{-- Hidden inputs --}}
-                                <template x-for="userId in selected" :key="userId">
-                                    <input type="hidden" name="members[]" :value="userId">
+
+                                {{-- Hidden member inputs --}}
+                                <template
+                                    x-for="userId in selected"
+                                    :key="userId"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="members[]"
+                                        :value="userId"
+                                    >
+
                                 </template>
 
-                                {{-- Multi Select --}}
-                                <div class="position-relative">
 
-                                    <button type="button" class="form-select text-start" @click="open = !open"
-                                        style="min-height: 42px;">
-                                        <span x-show="selected.length === 0" class="text-muted">
+                                {{-- Select Button --}}
+                                <div class="project-member-select-wrapper">
+
+                                    <button
+                                        type="button"
+                                        class="project-member-select"
+                                        @click="open = !open"
+                                    >
+
+                                        <span
+                                            x-show="selected.length === 0"
+                                            class="project-member-placeholder"
+                                        >
                                             Select project members
                                         </span>
 
-                                        <span x-show="selected.length > 0"
-                                            x-text="selected.length + ' member(s) selected'"></span>
+                                        <span
+                                            x-show="selected.length > 0"
+                                            class="project-member-selected-count"
+                                        >
+                                            <i class="bi bi-people-fill"></i>
+
+                                            <span
+                                                x-text="selected.length + ' member(s) selected'"
+                                            ></span>
+                                        </span>
+
+                                        <i
+                                            class="bi bi-chevron-down project-member-chevron"
+                                            :class="{ 'rotate': open }"
+                                        ></i>
+
                                     </button>
 
+
                                     {{-- Dropdown --}}
-                                    <div x-show="open" x-transition @click.outside="open = false"
-                                        class="position-absolute bg-white border rounded shadow-sm w-100 mt-1"
-                                        style="z-index: 1050; max-height: 320px; overflow-y: auto;" x-cloak>
+                                    <div
+                                        x-show="open"
+                                        x-cloak
+                                        x-transition
+                                        @click.outside="open = false"
+                                        class="project-member-dropdown"
+                                    >
 
                                         {{-- Search --}}
-                                        <div class="p-2 border-bottom sticky-top bg-white">
+                                        <div class="project-member-search">
 
-                                            <div class="input-group">
+                                            <div class="project-member-search-wrapper">
 
-                                                <span class="input-group-text bg-white">
-                                                    <i class="bi bi-search"></i>
-                                                </span>
+                                                <i class="bi bi-search"></i>
 
-                                                <input type="text" class="form-control" placeholder="Search users..."
-                                                    x-model="search" @click.stop>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Search users..."
+                                                    x-model="search"
+                                                    @click.stop
+                                                >
 
                                             </div>
 
                                         </div>
 
+
                                         {{-- Users --}}
-                                        <div>
+                                        <div class="project-member-list">
 
-                                            <template x-for="user in filteredUsers" :key="user.id">
+                                            <template
+                                                x-for="user in filteredUsers"
+                                                :key="user.id"
+                                            >
 
-                                                <button type="button"
-                                                    class="w-100 border-0 bg-white text-start px-3 py-2"
-                                                    @click="toggleUser(user.id)">
+                                                <button
+                                                    type="button"
+                                                    class="project-member-option"
+                                                    :class="{ 'selected': isSelected(user.id) }"
+                                                    @click="toggleUser(user.id)"
+                                                >
 
-                                                    <div class="d-flex align-items-center">
+                                                    {{-- Checkbox --}}
+                                                    <div class="project-member-checkbox">
 
-                                                        {{-- Checkbox --}}
-                                                        <div class="me-3">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="form-check-input"
+                                                            :checked="isSelected(user.id)"
+                                                            @click.stop
+                                                            @change="toggleUser(user.id)"
+                                                        >
 
-                                                            <input type="checkbox" class="form-check-input"
-                                                                :checked="isSelected(user.id)" @click.stop
-                                                                @change="toggleUser(user.id)">
+                                                    </div>
 
-                                                        </div>
 
-                                                        {{-- Avatar --}}
-                                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
-                                                            style="width: 36px; height: 36px;"
-                                                            x-text="user.name.charAt(0).toUpperCase()"></div>
+                                                    {{-- Avatar --}}
+                                                    <div
+                                                        class="project-member-avatar"
+                                                        x-text="user.name.charAt(0).toUpperCase()"
+                                                    ></div>
 
-                                                        {{-- User info --}}
-                                                        <div>
 
-                                                            <div class="fw-semibold" x-text="user.name"></div>
+                                                    {{-- User --}}
+                                                    <div class="project-member-info">
 
-                                                            <small class="text-muted" x-text="user.email"></small>
+                                                        <div
+                                                            class="project-member-name"
+                                                            x-text="user.name"
+                                                        ></div>
 
-                                                        </div>
+                                                        <div
+                                                            class="project-member-email"
+                                                            x-text="user.email"
+                                                        ></div>
 
                                                     </div>
 
@@ -286,10 +441,19 @@
 
                                             </template>
 
+
                                             {{-- No users --}}
-                                            <div x-show="filteredUsers.length === 0"
-                                                class="text-center text-muted py-4">
-                                                No users found.
+                                            <div
+                                                x-show="filteredUsers.length === 0"
+                                                class="project-member-empty"
+                                            >
+
+                                                <i class="bi bi-person-x"></i>
+
+                                                <span>
+                                                    No users found.
+                                                </span>
+
                                             </div>
 
                                         </div>
@@ -298,52 +462,78 @@
 
                                 </div>
 
-                                {{-- Selected Users --}}
-                                <div class="d-flex flex-wrap gap-2 mt-2" x-show="selectedUsers.length > 0">
 
-                                    <template x-for="user in selectedUsers" :key="user.id">
+                                {{-- Selected Members --}}
+                                <div
+                                    class="project-selected-members"
+                                    x-show="selectedUsers.length > 0"
+                                    x-cloak
+                                >
 
-                                        <span class="badge bg-light text-dark border px-3 py-2">
+                                    <template
+                                        x-for="user in selectedUsers"
+                                        :key="user.id"
+                                    >
+
+                                        <div class="project-selected-member">
 
                                             <span x-text="user.name"></span>
 
-                                            <button type="button" class="btn-close ms-2" style="font-size: 9px;"
-                                                @click="removeUser(user.id)" aria-label="Remove"></button>
+                                            <button
+                                                type="button"
+                                                @click="removeUser(user.id)"
+                                                aria-label="Remove user"
+                                            >
+                                                <i class="bi bi-x"></i>
+                                            </button>
 
-                                        </span>
+                                        </div>
 
                                     </template>
 
                                 </div>
 
+
                                 @error('members')
-                                    <div class="text-danger small mt-1">
+                                    <div class="project-form-error">
                                         {{ $message }}
                                     </div>
                                 @enderror
 
                                 @error('members.*')
-                                    <div class="text-danger small mt-1">
+                                    <div class="project-form-error">
                                         {{ $message }}
                                     </div>
                                 @enderror
 
-                                <div class="form-text">
-                                    Select the users who should have access to this project.
-                                    Selected members can be assigned to tasks later.
+
+                                <div class="project-form-help">
+
+                                    <i class="bi bi-info-circle me-1"></i>
+
+                                    Select the users who should have access to this
+                                    project. They can be assigned to tasks later.
+
                                 </div>
 
                             </div>
 
-                            {{-- Actions --}}
-                            <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 pt-3 border-top">
 
-                                <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary">
+                            {{-- Actions --}}
+                            <div class="project-form-actions">
+
+                                <a
+                                    href="{{ route('projects.index') }}"
+                                    class="btn btn-outline-secondary project-cancel-btn"
+                                >
                                     <i class="bi bi-x-lg me-1"></i>
                                     Cancel
                                 </a>
 
-                                <button type="submit" class="btn btn-primary">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary project-submit-btn"
+                                >
                                     <i class="bi bi-plus-lg me-1"></i>
                                     Create Project
                                 </button>

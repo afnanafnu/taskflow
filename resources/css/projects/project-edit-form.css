@@ -1,0 +1,1088 @@
+.project-form-page {
+    --pf-primary: #2563eb;
+    --pf-primary-dark: #1d4ed8;
+    --pf-primary-soft: #eff6ff;
+
+    --pf-success: #16a34a;
+    --pf-success-soft: #ecfdf5;
+
+    --pf-warning: #d97706;
+    --pf-warning-soft: #fffbeb;
+
+    --pf-danger: #dc2626;
+    --pf-danger-soft: #fef2f2;
+
+    --pf-purple: #7c3aed;
+    --pf-purple-soft: #f5f3ff;
+
+    --pf-text: #111827;
+    --pf-muted: #6b7280;
+    --pf-border: #e5e7eb;
+    --pf-bg: #f8fafc;
+}
+
+
+/* ========================================
+   Header
+======================================== */
+
+.project-form-header {
+    margin-bottom: 28px;
+}
+
+.project-form-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--pf-muted);
+    font-size: 13px;
+}
+
+.project-form-breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--pf-muted);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.project-form-breadcrumb a:hover {
+    color: var(--pf-primary);
+}
+
+.project-form-breadcrumb > i {
+    font-size: 10px;
+    color: #9ca3af;
+}
+
+.project-form-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.project-form-title-icon {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #3b82f6,
+        #1d4ed8
+    );
+
+    color: #fff;
+    font-size: 21px;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, .18);
+}
+
+.project-form-title {
+    margin: 0 0 4px;
+    color: var(--pf-text);
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.project-form-subtitle {
+    margin: 0;
+    color: var(--pf-muted);
+    font-size: 14px;
+}
+
+
+/* ========================================
+   Error Summary
+======================================== */
+
+.project-form-error-summary {
+    margin-bottom: 24px;
+    padding: 16px 18px;
+
+    background: var(--pf-danger-soft);
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+
+    color: #991b1b;
+}
+
+.project-form-error-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.project-form-error-summary ul {
+    margin: 0;
+    padding-left: 22px;
+
+    font-size: 13px;
+}
+
+.project-form-error-summary li {
+    margin-bottom: 3px;
+}
+
+
+/* ========================================
+   Main Card
+======================================== */
+
+.project-form-card {
+    overflow: hidden;
+
+    background: #fff;
+
+    border: 1px solid var(--pf-border);
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, .05);
+}
+
+.project-form-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid var(--pf-border);
+}
+
+.project-form-card-header h5 {
+    margin: 0 0 4px;
+
+    color: var(--pf-text);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.project-form-card-header h5 i {
+    color: var(--pf-primary);
+}
+
+.project-form-card-header p {
+    margin: 0;
+
+    color: var(--pf-muted);
+    font-size: 12px;
+}
+
+.project-form-id {
+    padding: 6px 10px;
+
+    background: var(--pf-primary-soft);
+    border-radius: 7px;
+
+    color: var(--pf-primary);
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.project-form-card-body {
+    padding: 28px 24px;
+}
+
+
+/* ========================================
+   Form
+======================================== */
+
+.project-form-group {
+    margin-bottom: 24px;
+}
+
+.project-form-label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--pf-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.project-form-label > span {
+    color: var(--pf-danger);
+}
+
+.project-form-input-wrapper {
+    position: relative;
+}
+
+.project-form-input-wrapper > i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 2;
+
+    color: #9ca3af;
+    font-size: 16px;
+
+    pointer-events: none;
+}
+
+.project-form-input,
+.project-form-select {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 10px 14px 10px 42px;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    color: var(--pf-text);
+    font-size: 14px;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.project-form-input:focus,
+.project-form-select:focus,
+.project-form-textarea:focus {
+    border-color: var(--pf-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .1);
+
+    outline: none;
+}
+
+.project-form-input::placeholder,
+.project-form-textarea::placeholder {
+    color: #9ca3af;
+}
+
+.project-form-textarea {
+    width: 100%;
+
+    min-height: 145px;
+
+    padding: 13px 14px;
+
+    resize: vertical;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    color: var(--pf-text);
+    font-size: 14px;
+    line-height: 1.6;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.project-form-input.is-invalid,
+.project-form-select.is-invalid,
+.project-form-textarea.is-invalid {
+    border-color: var(--pf-danger);
+}
+
+.project-form-input.is-invalid:focus,
+.project-form-select.is-invalid:focus,
+.project-form-textarea.is-invalid:focus {
+    box-shadow:
+        0 0 0 3px rgba(220, 38, 38, .1);
+}
+
+.project-form-field-error {
+    margin-top: 6px;
+
+    color: var(--pf-danger);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.project-form-help {
+    margin-top: 7px;
+
+    color: var(--pf-muted);
+    font-size: 11px;
+}
+
+
+/* ========================================
+   Members Selector
+======================================== */
+
+.project-member-selector {
+    position: relative;
+}
+
+.project-member-trigger {
+    width: 100%;
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 14px;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    color: var(--pf-text);
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.project-member-trigger:hover {
+    border-color: #9ca3af;
+}
+
+.project-member-trigger:focus {
+    border-color: var(--pf-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .1);
+
+    outline: none;
+}
+
+.project-member-trigger > i {
+    color: #6b7280;
+    transition: transform .2s ease;
+}
+
+.project-member-trigger > i.rotate {
+    transform: rotate(180deg);
+}
+
+.project-member-placeholder {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.project-member-selected-count {
+    color: var(--pf-text);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.project-member-dropdown {
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    z-index: 1050;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    border: 1px solid var(--pf-border);
+    border-radius: 11px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, .12);
+}
+
+.project-member-search {
+    padding: 10px;
+
+    background: #fff;
+
+    border-bottom: 1px solid var(--pf-border);
+}
+
+.project-member-search-box {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.project-member-search-box > i {
+    position: absolute;
+    left: 12px;
+
+    color: #9ca3af;
+}
+
+.project-member-search-box input {
+    width: 100%;
+
+    min-height: 40px;
+
+    padding: 8px 38px 8px 36px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.project-member-search-box input:focus {
+    border-color: var(--pf-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+.project-member-search-box button {
+    position: absolute;
+    right: 8px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #6b7280;
+}
+
+.project-member-search-box button:hover {
+    background: #f3f4f6;
+}
+
+.project-member-list {
+    max-height: 285px;
+    overflow-y: auto;
+}
+
+.project-member-option {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 13px;
+
+    border: 0;
+
+    background: #fff;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background .15s ease;
+}
+
+.project-member-option:hover {
+    background: #f8fafc;
+}
+
+.project-member-option.selected {
+    background: var(--pf-primary-soft);
+}
+
+.project-member-checkbox {
+    width: 20px;
+    flex: 0 0 20px;
+}
+
+.project-member-checkbox .form-check-input {
+    margin: 0;
+
+    cursor: pointer;
+}
+
+.project-member-avatar {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #6366f1,
+        #4338ca
+    );
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.project-member-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.project-member-name {
+    overflow: hidden;
+
+    color: var(--pf-text);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.project-member-email {
+    overflow: hidden;
+
+    margin-top: 2px;
+
+    color: var(--pf-muted);
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.project-member-check {
+    color: var(--pf-primary);
+    font-size: 16px;
+}
+
+.project-member-empty {
+    min-height: 130px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    color: var(--pf-muted);
+    font-size: 13px;
+}
+
+.project-member-empty i {
+    font-size: 24px;
+}
+
+
+/* ========================================
+   Selected Members
+======================================== */
+
+.project-selected-members {
+    margin-top: 12px;
+}
+
+.project-selected-title {
+    margin-bottom: 7px;
+
+    color: var(--pf-muted);
+
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.project-selected-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.project-selected-member {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 7px 5px 5px;
+
+    background: var(--pf-primary-soft);
+
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+
+    color: #1e40af;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.project-selected-avatar {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--pf-primary);
+
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.project-selected-name {
+    max-width: 150px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.project-selected-member button {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #1d4ed8;
+
+    cursor: pointer;
+}
+
+.project-selected-member button:hover {
+    background: #dbeafe;
+}
+
+
+/* ========================================
+   Form Actions
+======================================== */
+
+.project-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid var(--pf-border);
+}
+
+.project-form-cancel,
+.project-form-submit {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 9px 16px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.project-form-cancel {
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+
+    color: #4b5563;
+}
+
+.project-form-cancel:hover {
+    background: #f9fafb;
+    color: #374151;
+}
+
+.project-form-submit {
+    border: 0;
+
+    background: var(--pf-primary);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, .15);
+}
+
+.project-form-submit:hover {
+    background: var(--pf-primary-dark);
+    color: #fff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 14px rgba(37, 99, 235, .2);
+}
+
+
+/* ========================================
+   Sidebar
+======================================== */
+
+.project-form-side-card {
+    padding: 24px;
+
+    background: #fff;
+
+    border: 1px solid var(--pf-border);
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, .05);
+}
+
+.project-form-side-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    border-radius: 12px;
+
+    background: var(--pf-primary-soft);
+
+    color: var(--pf-primary);
+
+    font-size: 20px;
+}
+
+.project-form-side-card h5 {
+    margin: 0 0 7px;
+
+    color: var(--pf-text);
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.project-form-side-card > p {
+    margin: 0;
+
+    color: var(--pf-muted);
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.project-form-side-divider {
+    height: 1px;
+
+    margin: 20px 0;
+
+    background: var(--pf-border);
+}
+
+.project-form-meta {
+    display: grid;
+    gap: 13px;
+}
+
+.project-form-meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.project-form-meta-item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.project-form-meta-item span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: var(--pf-muted);
+
+    font-size: 12px;
+}
+
+.project-form-meta-item span i {
+    color: var(--pf-primary);
+}
+
+.project-form-meta-item strong {
+    color: var(--pf-text);
+
+    font-size: 12px;
+
+    text-align: right;
+}
+
+
+/* ========================================
+   Tips
+======================================== */
+
+.project-form-tips-card {
+    margin-top: 16px;
+    padding: 20px;
+
+    background: var(--pf-warning-soft);
+
+    border: 1px solid #fde68a;
+    border-radius: 14px;
+}
+
+.project-form-tips-title {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 13px;
+
+    color: #92400e;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.project-form-tips-title i {
+    color: var(--pf-warning);
+}
+
+.project-form-tips-card ul {
+    display: grid;
+
+    gap: 10px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.project-form-tips-card li {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    color: #78350f;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.project-form-tips-card li i {
+    flex: 0 0 auto;
+
+    margin-top: 3px;
+
+    color: var(--pf-success);
+}
+
+
+/* ========================================
+   View Project Button
+======================================== */
+
+.project-form-view-btn {
+    width: 100%;
+
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 16px;
+
+    background: #fff;
+
+    border: 1px solid var(--pf-border);
+    border-radius: 9px;
+
+    color: #4b5563;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        color .2s ease;
+}
+
+.project-form-view-btn:hover {
+    background: var(--pf-primary-soft);
+
+    border-color: #bfdbfe;
+
+    color: var(--pf-primary);
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 991.98px) {
+
+    .project-form-title {
+        font-size: 24px;
+    }
+
+    .project-form-side-card {
+        margin-top: 0;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+
+    .project-form-header {
+        margin-bottom: 22px;
+    }
+
+    .project-form-title-wrapper {
+        align-items: flex-start;
+    }
+
+    .project-form-title-icon {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+
+        border-radius: 11px;
+
+        font-size: 18px;
+    }
+
+    .project-form-title {
+        font-size: 21px;
+    }
+
+    .project-form-subtitle {
+        font-size: 12px;
+    }
+
+    .project-form-card-header {
+        padding: 18px;
+    }
+
+    .project-form-card-body {
+        padding: 20px 18px;
+    }
+
+    .project-form-card-header p {
+        display: none;
+    }
+
+    .project-form-id {
+        font-size: 11px;
+    }
+
+    .project-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .project-form-cancel,
+    .project-form-submit {
+        width: 100%;
+    }
+
+    .project-form-side-card {
+        padding: 20px;
+    }
+
+    .project-form-tips-card {
+        padding: 18px;
+    }
+
+    .project-member-dropdown {
+        position: fixed;
+
+        top: 50%;
+        left: 15px;
+        right: 15px;
+
+        width: auto;
+
+        max-height: 70vh;
+
+        transform: translateY(-50%);
+    }
+}

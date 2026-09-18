@@ -10,7 +10,15 @@ export default defineConfig({
 
                 // Task pages
                 'resources/css/tasks/task-create.css',
-                'resources/js/tasks/task-create.js',
+                'resources/css/tasks/task-show.css',
+                'resources/css/tasks/task-index.css',
+
+                // project pages
+                'resources/css/projects/projects-index.css',
+                'resources/css/projects/project-show.css',
+                'resources/css/projects/project-create-form.css',
+                'resources/css/projects/project-edit-form.css',
+
             ],
             refresh: true,
         }),
